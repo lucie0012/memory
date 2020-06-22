@@ -22,17 +22,25 @@
 
         <div class="row">
 
-            <!-- Input number of cards -->
+            <!-- Select number of cards -->
             <div class="form-inline mb-4">
                 <div class="form-group mx-sm-3 mb-2">
-                    <label for="inputNumberOfCards" class="col-form-label">Nombre de carte souhaitées (entre 6 et 20) :
-                    </label>
-                    <input class="form-control ml-2" id="inputNumberOfCards" type="number" min="6" max="20"
-                        name="numberOfCards" maxlength="100" required>
+                    <label for="selectNumberOfCards">Nombre de carte souhaitées</label>
+                    <select class="form-control ml-2" id="selectNumberOfCards">
+                        <option>6</option>
+                        <option>8</option>
+                        <option>10</option>
+                        <option>12</option>
+                        <option>14</option>
+                        <option>16</option>
+                        <option>18</option>
+                        <option>20</option>
+                        <option>22</option>
+                        <option>24</option>
+                    </select>
                 </div>
-                <button type="button" class="btn btn-outline-dark mb-2" id="btnNumberCards">Jouer</button>
             </div>
-            <!-- /Input number of cards -->
+            <!-- /Select number of cards -->
 
             <div class="row row-cols-3 row-cols-md-6" id="gameCards">
 
@@ -50,14 +58,15 @@
     </div>
 
     <script>
-        // Collect value input
+
         let numberPlayingCards;
 
-        $("#btnNumberCards").click(function () {
-            numberPlayingCards = $('#inputNumberOfCards').val();
+        // Collect value select
+        $('#selectNumberOfCards').on('change', function () {
+            numberPlayingCards = $('#selectNumberOfCards option:selected').text();
             console.log("numberPlayingCards " + numberPlayingCards);
             createCard();
-        });
+        })
 
         // PENSER à faire la vérification formulaire manuellement (min 6 max 20) et pas vide ni lettre et nombre paire
         // penser aussi quand reclique ou change chiffre alors ne pas ajouter aux cartes déjà présentes (réinitialiser ?)
