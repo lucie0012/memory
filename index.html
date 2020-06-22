@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>Memory</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Jouons !</h1>
+
+        <div class="row">
+
+            <!-- Input number of cards -->
+            <div class="form-inline mb-4">
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="inputNumberOfCards" class="col-form-label">Nombre de carte souhaitées (entre 6 et 20) :
+                    </label>
+                    <input class="form-control ml-2" id="inputNumberOfCards" type="number" min="6" max="20"
+                        name="numberOfCards" maxlength="100" required>
+                </div>
+                <button type="button" class="btn btn-outline-dark mb-2" id="btnNumberCards">Jouer</button>
+            </div>
+            <!-- /Input number of cards -->
+
+            <div class="row row-cols-3 row-cols-md-6" id="gameCards">
+
+                <!-- DIV cards -->
+                <!-- <div class="col mb-4">
+                    <div class="card">
+                        <img src="images/1200px-Visual_Studio_Code_1.35_icon.svg.png" class="card-img-top" alt="..." id="cards_0">
+                    </div>
+                </div>-->
+                <!-- /DIV cards -->
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Collect value input
+        let numberPlayingCards;
+
+        $("#btnNumberCards").click(function () {
+            numberPlayingCards = $('#inputNumberOfCards').val();
+            console.log("numberPlayingCards " + numberPlayingCards);
+            createCard();
+        });
+
+        // PENSER à faire la vérification formulaire manuellement (min 6 max 20) et pas vide ni lettre et nombre paire
+        // penser aussi quand reclique ou change chiffre alors ne pas ajouter aux cartes déjà présentes (réinitialiser ?)
+
+        // Create boucle DIV card
+        function createCard() {
+            console.log("createCard " + numberPlayingCards);
+
+            for (let i = 0; i < numberPlayingCards; i++) {
+                console.log("card " + i);
+
+                $('#gameCards').append('<div class="col mb-4"><div class="card"><img src="images/1200px-Visual_Studio_Code_1.35_icon.svg.png" class="card-img-top" alt="..." id="cards_' + i + '"></div></div>');
+
+            }
+            // elle créé autant de DIV (et donc de cartes) que le nombre saisi dans l'input
+            // l'id est cards_i (i étant le nombre de 0 à valeurSaisieDansInput)
+            // elle sera déclenchée quand l'utilisateur cliquera sur jouer ET après avoir récup la value dans l'input
+            console.log("Coucou fonction createCard");
+
+            // Return card (attention bien le faire dans la fonction où je créé mes DIV et après leur création car sinon fonctionne pas : voir si pas autre moyen ?)
+            for (let i = 0; i < numberPlayingCards; i++) {
+                $("#cards_" + i).click(() => {
+                    console.log("#cards_" + i);
+
+                    $("#cards_" + i).attr('src', 'images/js.png');
+                });
+            };
+
+        };
+
+    </script>
+
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
