@@ -17,7 +17,7 @@
 
 <body>
 
-    <div class="container">
+    <div class="container mt-4">
         <h1>Jouons !</h1>
 
         <div class="row">
@@ -27,6 +27,7 @@
                 <div class="form-group mx-sm-3 mb-2">
                     <label for="selectNumberOfCards">Nombre de carte souhaitées</label>
                     <select class="form-control ml-2" id="selectNumberOfCards">
+                        <option>Choisissez</option>
                         <option>6</option>
                         <option>8</option>
                         <option>10</option>
@@ -42,17 +43,19 @@
             </div>
             <!-- /Select number of cards -->
 
+            <!-- Button reset -->
+            <div class="form-inline mb-4">
+                <div class="form-group mx-sm-3 mb-2">
+                    <button id="buttonSup" type="button" class="btn btn-primary">Réinitialiser</button>
+                </div>
+            </div>
+            <!-- /Button reset -->
+
+            <!-- Div cards -->
             <div class="row row-cols-3 row-cols-md-6" id="gameCards">
 
-                <!-- DIV cards -->
-                <!-- <div class="col mb-4">
-                    <div class="card">
-                        <img src="images/1200px-Visual_Studio_Code_1.35_icon.svg.png" class="card-img-top" alt="..." id="cards_0">
-                    </div>
-                </div>-->
-                <!-- /DIV cards -->
-
             </div>
+            <!-- /Div cards -->
 
         </div>
     </div>
@@ -61,32 +64,42 @@
 
         let numberPlayingCards;
 
-        // Collect value select
+        // Collect value of select
         $('#selectNumberOfCards').on('change', function () {
             numberPlayingCards = $('#selectNumberOfCards option:selected').text();
-            console.log("numberPlayingCards " + numberPlayingCards);
-            createCard();
+
+            if (numberPlayingCards == 'Choisissez') {
+                alert("Vous devez choisir un nombre");
+            } else {
+                console.log("numberPlayingCards " + numberPlayingCards);
+                createCards();
+                // fonction pour cacher zone select card et afficher bouton reset ?
+            }
+        });
+
+        // Reset the card area
+        $('.container').on('click', '#buttonSup', function () {
+            console.log("RESET");
+            for (let i = 0; i < numberPlayingCards; i++) {
+                $('#areaCards_' + i).remove();
+            }
+            // fonction pour cacher bouton reset et afficher zone select ?
         })
 
-        // PENSER à faire la vérification formulaire manuellement (min 6 max 20) et pas vide ni lettre et nombre paire
-        // penser aussi quand reclique ou change chiffre alors ne pas ajouter aux cartes déjà présentes (réinitialiser ?)
-
-        // Create boucle DIV card
-        function createCard() {
-            console.log("createCard " + numberPlayingCards);
+        // Create loop of div card
+        function createCards() {
+            console.log("createCards " + numberPlayingCards);
 
             for (let i = 0; i < numberPlayingCards; i++) {
                 console.log("card " + i);
 
-                $('#gameCards').append('<div class="col mb-4"><div class="card"><img src="images/1200px-Visual_Studio_Code_1.35_icon.svg.png" class="card-img-top" alt="..." id="cards_' + i + '"></div></div>');
+                $('#gameCards').append('<div class="col mb-4" id="areaCards_' + i + '"><div class="card"><img src="images/1200px-Visual_Studio_Code_1.35_icon.svg.png" class="card-img-top" alt="..." id="cards_' + i + '"></div></div>');
 
             }
-            // elle créé autant de DIV (et donc de cartes) que le nombre saisi dans l'input
-            // l'id est cards_i (i étant le nombre de 0 à valeurSaisieDansInput)
-            // elle sera déclenchée quand l'utilisateur cliquera sur jouer ET après avoir récup la value dans l'input
-            console.log("Coucou fonction createCard");
+            console.log("fin fonction createCards");
 
-            // Return card (attention bien le faire dans la fonction où je créé mes DIV et après leur création car sinon fonctionne pas : voir si pas autre moyen ?)
+            // Return the card 
+            // (attention bien le faire dans la fonction où je créé mes DIV et après leur création car sinon fonctionne pas : voir si pas autre moyen ?)
             for (let i = 0; i < numberPlayingCards; i++) {
                 $("#cards_" + i).click(() => {
                     console.log("#cards_" + i);
