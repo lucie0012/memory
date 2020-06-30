@@ -23,37 +23,36 @@
         <div class="row">
 
             <!-- Select number of cards -->
-            <div class="form-inline mb-4">
-                <div class="form-group mx-sm-3 mb-2">
-                    <label for="selectNumberOfCards">Nombre de carte souhaitées</label>
-                    <select class="form-control ml-2" id="selectNumberOfCards">
-                        <option>Choisissez</option>
-                        <option>6</option>
-                        <option>8</option>
-                        <option>10</option>
-                        <option>12</option>
-                        <option>14</option>
-                        <option>16</option>
-                        <option>18</option>
-                        <option>20</option>
-                        <option>22</option>
-                        <option>24</option>
-                    </select>
+            <div>
+                <div class="form-inline mb-3 mt-2">
+                    <div id="selectGroup" class="form-group mx-sm-3">
+                        <label for="selectNumberOfCards">Nombre de carte souhaitées</label>
+                        <select class="form-control ml-2" id="selectNumberOfCards">
+                            <option value="Choisissez">Choisissez</option>
+                            <option>6</option>
+                            <option>8</option>
+                            <option>10</option>
+                            <option>12</option>
+                            <option>14</option>
+                            <option>16</option>
+                            <option>18</option>
+                            <option>20</option>
+                            <option>22</option>
+                            <option>24</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <!-- /Select number of cards -->
+                <!-- /Select number of cards -->
 
-            <!-- Button reset -->
-            <div class="form-inline mb-4">
-                <div class="form-group mx-sm-3 mb-2">
-                    <button id="buttonSup" type="button" class="btn btn-primary">Réinitialiser</button>
+                <!-- Button reset -->
+                <div class="form-group mx-sm-3">
+                    <button id="buttonReset" type="button" class="btn btn-primary">Réinitialiser</button>
                 </div>
+                <!-- /Button reset -->
             </div>
-            <!-- /Button reset -->
 
             <!-- Div cards -->
-            <div class="row row-cols-3 row-cols-md-6" id="gameCards">
-
+            <div class="row row-cols-3 row-cols-md-6 mt-4" id="gameCards">
             </div>
             <!-- /Div cards -->
 
@@ -73,17 +72,20 @@
             } else {
                 console.log("numberPlayingCards " + numberPlayingCards);
                 createCards();
-                // fonction pour cacher zone select card et afficher bouton reset ?
+                $('#selectGroup').hide();
+                $('#buttonReset').show();
             }
         });
 
         // Reset the card area
-        $('.container').on('click', '#buttonSup', function () {
+        $('.container').on('click', '#buttonReset', function () {
             console.log("RESET");
             for (let i = 0; i < numberPlayingCards; i++) {
                 $('#areaCards_' + i).remove();
             }
-            // fonction pour cacher bouton reset et afficher zone select ?
+            $('#selectGroup').show();
+            $('#selectNumberOfCards option[value="Choisissez"]').prop('selected', true);
+            $('#buttonReset').hide();
         })
 
         // Create loop of div card
