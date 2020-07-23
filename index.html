@@ -62,16 +62,19 @@
     <script>
 
         let numberPlayingCards;
+        let numberOfTimes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        let nameImageFront = [];
 
-        // Collect value of select
+        // Collect value of select => number playing cards
         $('#selectNumberOfCards').on('change', function () {
             numberPlayingCards = $('#selectNumberOfCards option:selected').text();
 
             if (numberPlayingCards == 'Choisissez') {
                 alert("Vous devez choisir un nombre");
             } else {
-                console.log("numberPlayingCards " + numberPlayingCards);
-                createCards();
+                console.log("number playing cards : " + numberPlayingCards + " cards");
+                createGame()
+                game();
                 $('#selectGroup').hide();
                 $('#buttonReset').show();
             }
@@ -88,17 +91,44 @@
             $('#buttonReset').hide();
         })
 
-        // Create loop of div card
-        function createCards() {
-            console.log("createCards " + numberPlayingCards);
+        // Create cards game
+        function createGame() {
+            console.log("create game of " + numberPlayingCards + " cards");
 
+            for (let i = 0; i < numberPlayingCards; i++) {
+
+                while (nameImageFront[i] == undefined) {
+
+                    let imageRandom = Math.round((Math.random() * ((numberPlayingCards / 2) - 1)) + 1);
+                    // le multiplicateur doit toujours être le nombre total de cartes à afficher - 1 (et sachant qu'ici on veut des paires alors on divise d'abord par 2)
+                    let indiceNumberOfTimes = imageRandom - 1;
+                    // console.log("++ i : " + i);
+                    // console.log("++ image random : " + imageRandom + " indice : " + indiceNumberOfTimes);
+                    // console.log("++ number of times avant : " + numberOfTimes[indiceNumberOfTimes]);
+
+                    if (numberOfTimes[indiceNumberOfTimes] < 2) {
+                        nameImageFront[i] = imageRandom;
+                        numberOfTimes[indiceNumberOfTimes] = numberOfTimes[indiceNumberOfTimes] + 1;
+                        // console.log("array name image front : " + nameImageFront[i]);
+                        // console.log("array number of times : " + numberOfTimes[indiceNumberOfTimes]);
+                    }
+                }
+            }
+            console.log("array number of times : " + numberOfTimes);
+            console.log("array name image front : " + nameImageFront);
+            console.log("fin fonction createGame");
+        }
+
+        function game() {
+            console.log("game of " + numberPlayingCards + " cards");
+
+            // Create loop of div card
             for (let i = 0; i < numberPlayingCards; i++) {
                 console.log("card " + i);
 
-                $('#gameCards').append('<div class="col mb-4" id="areaCards_' + i + '"><div class="card"><img src="images/1200px-Visual_Studio_Code_1.35_icon.svg.png" class="card-img-top" alt="..." id="cards_' + i + '"></div></div>');
+                $('#gameCards').append('<div class="col mb-4" id="areaCards_' + i + '"><div class="card"><img src="images/verso.png" class="card-img-top" alt="..." id="cards_' + i + '"></div></div>');
 
             }
-            console.log("fin fonction createCards");
 
             // Return the card 
             // (attention bien le faire dans la fonction où je créé mes DIV et après leur création car sinon fonctionne pas : voir si pas autre moyen ?)
@@ -106,10 +136,14 @@
                 $("#cards_" + i).click(() => {
                     console.log("#cards_" + i);
 
-                    $("#cards_" + i).attr('src', 'images/js.png');
+            // créer le tableau de jeu avant => OK => et l'utiliser complet ensuite lors du "return card"
+                    $("#cards_" + i).attr('src', 'images/1.png');
+                    // $("#cards_" + i).attr('src', 'images/' + Math.round((Math.random() * ((numberPlayingCards / 2 ) - 1)) + 1) + '.png')
+                    
                 });
             };
 
+            console.log("fin fonction game");
         };
 
     </script>
